@@ -1,12 +1,17 @@
-name: "Danger Swift"
+name: CI
 on: [pull_request]
-
 jobs:
 build:
-runs-on: ubuntu-latest
+runs-on: macos-latest
+
 steps:
-- uses: actions/checkout@v1
+- uses: actions/checkout@master
+- name: Build
+run: swift build
+
+- name: Test
+run: swift test
+
 - name: Danger
-uses: danger/swift@2.0.1
-env:
-GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+run: danger-swift ci
+env: GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
